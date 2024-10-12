@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tailwindcss -i ./css/styles.css -o ./dist/output.css --watch",
+    "build": "tailwindcss -i ./css/styles.css -o ./dist/output.css",
     "start": "tailwindcss -i ./css/styles.css -o ./dist/output.css && lite-server",
     "dev": "tailwindcss -i ./src/styles.css -o ./dist/styles.css --watch"
   },

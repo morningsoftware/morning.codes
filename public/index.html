@@ -3,12 +3,76 @@
     <head>
         <title>morning.codes</title>
         <link href="/css/output.css" rel="stylesheet" />
+        <script>
+            function moveCaret() {
+                const input = document.querySelector("input");
+                const span = document.querySelector("span");
+                const caretPosition = input.selectionStart;
+                span.style.transform = `translateX(${caretPosition * 0.49 + 0.96}rem)`;
+            }
+            function checkKey(event) {
+                const input = event.target.value;
+                if (event.key === "Enter") {
+                    if (input === "cd projects") {
+                        window.location.href = "/pages/projects.html";
+                    } else if (input === "cd login") {
+                        window.location.href = "/pages/login.html";
+                    } else if (input === "cd 404") {
+                        window.location.href = "/pages/404.html";
+                    } else if (input === "ls") {
+                        inputMessage(event.target, "projects login 404");
+                    } else if (input.startsWith("cd")) {
+                        inputMessage(event.target, "no such file or directory");
+                    } else if (input.includes("help")) {
+                        inputMessage(event.target, "try ls :)");
+                    } else {
+                        inputMessage(event.target, "command not found");
+                    }
+                }
+            }
+            function inputMessage(input, message) {
+                input.value = message;
+                input.style.opacity = 0.5;
+                input.disabled = true;
+                moveCaret();
+                setTimeout(() => {
+                    input.value = "";
+                    input.style.opacity = 1;
+                    input.disabled = false;
+                    input.focus();
+                    moveCaret();
+                }, 2000);
+            }
+            document.addEventListener("DOMContentLoaded", function () {
+                const input = document.querySelector("input");
+                input.focus();
+            });
+        </script>
     </head>
-    <body class="bg-gray-950 text-emerald-50">
-        <div class="flex justify-center items-center text-center h-screen">
-            Hey, I'm morning. I make
-            <a href="pages/projects.html">&nbspstuff</a>.
-            <span class="animate-flash bg-emerald-400">&nbsp</span>
+    <body
+        class="flex font-mono justify-center items-center h-screen bg-gray-950 text-emerald-50"
+    >
+        <div class="text-left">
+            <h1>Hey, I'm morning. I make stuff.</h1>
+            <h1 class="flex items-center">
+                ➜
+                <input
+                    class="appearance-none bg-transparent border-none w-full text-emerald-50 py-1 px-2 leading-tight focus:outline-none caret-transparent"
+                    type="text"
+                    placeholder=""
+                    aria-label="Search the system!"
+                    maxlength="15"
+                    oninput="moveCaret()"
+                    onclick="moveCaret()"
+                    onkeyup="moveCaret()"
+                    onkeydown="checkKey(event)"
+                />
+                <span
+                    name="caret"
+                    class="absolute animate-flash text-emerald-50 translate-x-4 bg-green-400"
+                    >&nbsp
+                </span>
+            </h1>
         </div>
     </body>
 </html>

@@ -3,6 +3,7 @@
     <head>
         <title>morning.codes</title>
         <link href="/css/output.css" rel="stylesheet" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script>
             function moveCaret() {
                 const input = document.querySelector("input");
@@ -13,17 +14,17 @@
             function checkKey(event) {
                 const input = event.target.value;
                 if (event.key === "Enter") {
-                    if (input === "cd projects") {
+                    if (input.toLowerCase() === "cd projects") {
                         window.location.href = "/pages/projects.html";
-                    } else if (input === "cd login") {
+                    } else if (input.toLowerCase() === "cd login") {
                         window.location.href = "/pages/login.html";
-                    } else if (input === "cd 404") {
+                    } else if (input.toLowerCase() === "cd 404") {
                         window.location.href = "/pages/404.html";
-                    } else if (input === "ls") {
+                    } else if (input.toLowerCase() === "ls") {
                         inputMessage(event.target, "projects login 404");
-                    } else if (input.startsWith("cd")) {
+                    } else if (inputinput.toLowerCase().startsWith("cd")) {
                         inputMessage(event.target, "no such file or directory");
-                    } else if (input.includes("help")) {
+                    } else if (input.toLowerCase().includes("help")) {
                         inputMessage(event.target, "try ls :)");
                     } else {
                         inputMessage(event.target, "command not found");
@@ -50,7 +51,7 @@
         </script>
     </head>
     <body
-        class="flex font-mono justify-center items-center h-screen bg-gray-950 text-emerald-50"
+        class="flex font-mono justify-center items-center h-screen bg-gray-950 text-emerald-50 text-lg"
     >
         <div class="text-left">
             <h1>Hey, I'm morning. I make stuff.</h1>

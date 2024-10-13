@@ -6,28 +6,78 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script>
             function moveCaret() {
+                //TODO: Add caret position logic.
                 const input = document.querySelector("input");
                 const span = document.querySelector("span");
-                const caretPosition = input.selectionStart;
-                span.style.transform = `translateX(${caretPosition * 0.49 + 0.96}rem)`;
+                const inputLength = input.value.length;
+                span.style.transform = `translateX(${inputLength * 0.53 + 1}rem)`;
             }
+            var pageLocation = "~";
             function checkKey(event) {
                 const input = event.target.value;
                 if (event.key === "Enter") {
-                    if (input.toLowerCase() === "cd projects") {
-                        window.location.href = "/pages/projects.html";
-                    } else if (input.toLowerCase() === "cd login") {
-                        window.location.href = "/pages/login.html";
-                    } else if (input.toLowerCase() === "cd 404") {
-                        window.location.href = "/pages/404.html";
-                    } else if (input.toLowerCase() === "ls") {
-                        inputMessage(event.target, "projects login 404");
-                    } else if (inputinput.toLowerCase().startsWith("cd")) {
-                        inputMessage(event.target, "no such file or directory");
-                    } else if (input.toLowerCase().includes("help")) {
-                        inputMessage(event.target, "try ls :)");
-                    } else {
-                        inputMessage(event.target, "command not found");
+                    // Check if user is in root directory
+                    if (pageLocation === "~") {
+                        if (input.toLowerCase() === "cd projects") {
+                            pageLocation = "projects";
+                            clearInput();
+                        } else if (input.toLowerCase() === "cd login") {
+                            pageLocation = "login";
+                            clearInput();
+                        } else if (input.toLowerCase() === "cd 404") {
+                            pageLocation = "404";
+                            clearInput();
+                        } else if (input.toLowerCase() === "ls") {
+                            inputMessage(event.target, "projects login 404");
+                        } else if (input.toLowerCase().startsWith("cd")) {
+                            inputMessage(
+                                event.target,
+                                "no such file or directory",
+                            );
+                        } else if (input.toLowerCase().includes("help")) {
+                            inputMessage(event.target, "try ls :)");
+                        } else {
+                            inputMessage(event.target, "command not found");
+                        }
+                        // Check if user is in projects directory.
+                    } else if (pageLocation === "projects") {
+                        if (input.toLowerCase() === "cd ..") {
+                            pageLocation = "~";
+                            clearInput();
+                        } else if (input.toLowerCase() === "./projects.html") {
+                            window.location.href = "/pages/projects.html";
+                        } else {
+                            inputMessage(
+                                event.target,
+                                "no such file or directory",
+                            );
+                        }
+                        // Check if user is in login directory.
+                    } else if (pageLocation === "login") {
+                        if (input.toLowerCase() === "cd ..") {
+                            pageLocation = "~";
+                            clearInput();
+                        } else {
+                            inputMessage(
+                                event.target,
+                                "no such file or directory",
+                            );
+                        }
+                        // Check if user is in 404 directory.
+                    } else if (pageLocation === "404") {
+                        if (input.toLowerCase() === "cd ..") {
+                            pageLocation = "~";
+                            clearInput();
+                        } else if (input.toLowerCase() === "ls") {
+                            inputMessage(event.target, "404.html");
+                        } else if (input.toLowerCase() === "./404.html") {
+                            window.location.href = "/404.html";
+                        } else {
+                            inputMessage(
+                                event.target,
+                                "no such file or directory",
+                            );
+                        }
                     }
                 }
             }
@@ -43,6 +93,11 @@
                     input.focus();
                     moveCaret();
                 }, 2000);
+            }
+            function clearInput() {
+                const input = document.querySelector("input");
+                input.value = "";
+                input.focus();
             }
             document.addEventListener("DOMContentLoaded", function () {
                 const input = document.querySelector("input");
